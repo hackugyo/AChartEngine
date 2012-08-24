@@ -113,9 +113,12 @@ public class PieChart extends RoundChart {
           shortRadius, longRadius, currentAngle, angle, left, right, mRenderer.getLabelsColor(),
           paint, true);
       if (mRenderer.isDisplayValues()) {
+        boolean isShowLabels = mRenderer.isShowLabels();
+        mRenderer.setShowLabels(true);
         drawLabel(canvas, getLabel(mDataset.getValue(i)), mRenderer, prevLabelsBounds, mCenterX,
             mCenterY, shortRadius / 2, longRadius / 2, currentAngle, angle, left, right,
             mRenderer.getLabelsColor(), paint, false);
+        mRenderer.setShowLabels(isShowLabels);
       }
 
       // Save details for getSeries functionality
