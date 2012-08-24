@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,6 +95,8 @@ public class DefaultRenderer implements Serializable {
   private boolean mClickEnabled = false;
   /** The selectable radius around a clickable point. */
   private int selectableBuffer = 15;
+  /** If the chart should display the values (available for pie chart). */
+  private boolean mDisplayValues;
 
   /**
    * A flag to be set if the chart is inside a scroll and doesn't need to shrink
@@ -166,6 +168,13 @@ public class DefaultRenderer implements Serializable {
    */
   public void removeSeriesRenderer(SimpleSeriesRenderer renderer) {
     mRenderers.remove(renderer);
+  }
+
+  /**
+   * Removes all renderers from the multiple renderer.
+   */
+  public void removeAllRenderers() {
+    mRenderers.clear();
   }
 
   /**
@@ -250,7 +259,6 @@ public class DefaultRenderer implements Serializable {
     mAxesColor = color;
   }
 
-
   /**
    * Returns the labels color.
    * 
@@ -259,7 +267,7 @@ public class DefaultRenderer implements Serializable {
   public int getLabelsColor() {
     return mLabelsColor;
   }
-  
+
   /**
    * Sets the labels color.
    * 
@@ -704,7 +712,7 @@ public class DefaultRenderer implements Serializable {
    * of 0 degrees correspond to the geometric angle of 0 degrees (3 o'clock on a
    * watch.)
    * 
-   * @return the start angle
+   * @return the start angle in degrees
    */
   public float getStartAngle() {
     return mStartAngle;
@@ -715,10 +723,28 @@ public class DefaultRenderer implements Serializable {
    * angle of 0 degrees correspond to the geometric angle of 0 degrees (3
    * o'clock on a watch.)
    * 
-   * @param startAngle the start angle
+   * @param startAngle the start angle in degrees
    */
   public void setStartAngle(float startAngle) {
     mStartAngle = startAngle;
+  }
+
+  /**
+   * Returns if the values should be displayed as text.
+   * 
+   * @return if the values should be displayed as text
+   */
+  public boolean isDisplayValues() {
+    return mDisplayValues;
+  }
+
+  /**
+   * Sets if the values should be displayed as text (supported by pie chart).
+   * 
+   * @param display if the values should be displayed as text
+   */
+  public void setDisplayValues(boolean display) {
+    mDisplayValues = display;
   }
 
 }

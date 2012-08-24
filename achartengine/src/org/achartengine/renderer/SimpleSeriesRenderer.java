@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ public class SimpleSeriesRenderer implements Serializable {
   private int mColor = Color.BLUE;
   /** If the values should be displayed above the chart points. */
   private boolean mDisplayChartValues;
+  /** The minimum distance between displaying chart values. */
+  private int mDisplayChartValuesDistance = 100;
   /** The chart values text size. */
   private float mChartValuesTextSize = 10;
   /** The chart values text alignment. */
@@ -39,14 +41,14 @@ public class SimpleSeriesRenderer implements Serializable {
   /** If gradient is enabled. */
   private boolean mGradientEnabled = false;
   /** The gradient start value. */
-  private double mGradientStartValue; 
+  private double mGradientStartValue;
   /** The gradient start color. */
   private int mGradientStartColor;
   /** The gradient stop value. */
-  private double mGradientStopValue; 
+  private double mGradientStopValue;
   /** The gradient stop color. */
   private int mGradientStopColor;
-  
+
   /**
    * Returns the series color.
    * 
@@ -84,6 +86,24 @@ public class SimpleSeriesRenderer implements Serializable {
   }
 
   /**
+   * Returns the chart values minimum distance.
+   * 
+   * @return the chart values minimum distance
+   */
+  public int getDisplayChartValuesDistance() {
+    return mDisplayChartValuesDistance;
+  }
+
+  /**
+   * Sets chart values minimum distance.
+   * 
+   * @param distance the chart values minimum distance
+   */
+  public void setDisplayChartValuesDistance(int distance) {
+    mDisplayChartValuesDistance = distance;
+  }
+
+  /**
    * Returns the chart values text size.
    * 
    * @return the chart values text size
@@ -101,7 +121,6 @@ public class SimpleSeriesRenderer implements Serializable {
     mChartValuesTextSize = textSize;
   }
 
-  
   /**
    * Returns the chart values text align.
    * 
@@ -119,7 +138,7 @@ public class SimpleSeriesRenderer implements Serializable {
   public void setChartValuesTextAlign(Align align) {
     mChartValuesTextAlign = align;
   }
-  
+
   /**
    * Returns the chart values spacing from the data point.
    * 
@@ -132,7 +151,8 @@ public class SimpleSeriesRenderer implements Serializable {
   /**
    * Sets the chart values spacing from the data point.
    * 
-   * @param spacing the chart values spacing (in pixels) from the chart data point
+   * @param spacing the chart values spacing (in pixels) from the chart data
+   *          point
    */
   public void setChartValuesSpacing(float spacing) {
     mChartValuesSpacing = spacing;
@@ -155,17 +175,19 @@ public class SimpleSeriesRenderer implements Serializable {
   public void setStroke(BasicStroke stroke) {
     mStroke = stroke;
   }
-  
+
   /**
    * Returns the gradient is enabled value.
+   * 
    * @return the gradient enabled
    */
   public boolean isGradientEnabled() {
     return mGradientEnabled;
   }
-  
+
   /**
    * Sets the gradient enabled value.
+   * 
    * @param enabled the gradient enabled
    */
   public void setGradientEnabled(boolean enabled) {
@@ -174,22 +196,25 @@ public class SimpleSeriesRenderer implements Serializable {
 
   /**
    * Returns the gradient start value.
+   * 
    * @return the gradient start value
    */
   public double getGradientStartValue() {
     return mGradientStartValue;
   }
-  
+
   /**
    * Returns the gradient start color.
+   * 
    * @return the gradient start color
    */
   public int getGradientStartColor() {
     return mGradientStartColor;
   }
-  
+
   /**
    * Sets the gradient start value and color.
+   * 
    * @param start the gradient start value
    * @param color the gradient start color
    */
@@ -200,22 +225,25 @@ public class SimpleSeriesRenderer implements Serializable {
 
   /**
    * Returns the gradient stop value.
+   * 
    * @return the gradient stop value
    */
   public double getGradientStopValue() {
     return mGradientStopValue;
   }
-  
+
   /**
    * Returns the gradient stop color.
+   * 
    * @return the gradient stop color
    */
   public int getGradientStopColor() {
     return mGradientStopColor;
   }
-  
+
   /**
    * Sets the gradient stop value and color.
+   * 
    * @param start the gradient stop value
    * @param color the gradient stop color
    */

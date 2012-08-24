@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public abstract class RoundChart extends AbstractChart {
       paint.setColor(mRenderer.getLabelsColor());
       paint.setTextAlign(Align.CENTER);
       paint.setTextSize(mRenderer.getChartTitleTextSize());
-      canvas.drawText(mRenderer.getChartTitle(), x + width / 2,
+      drawString(canvas, mRenderer.getChartTitle(), x + width / 2,
           y + mRenderer.getChartTitleTextSize(), paint);
     }
   }

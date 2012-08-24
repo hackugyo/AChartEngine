@@ -49,6 +49,10 @@ public class BarChart extends XYChart {
   BarChart() {
   }
 
+  BarChart(Type type) {
+    mType = type;
+  }
+
   /**
    * Builds a new bar chart instance.
    * 
@@ -152,8 +156,8 @@ public class BarChart extends XYChart {
       float minY = (float) toScreenPoint(new double[] { 0, renderer.getGradientStopValue() }, scale)[1];
       float maxY = (float) toScreenPoint(new double[] { 0, renderer.getGradientStartValue() },
           scale)[1];
-      float gradientMinY = Math.max(minY, yMin);
-      float gradientMaxY = Math.min(maxY, yMax);
+      float gradientMinY = Math.max(minY, Math.min(yMin, yMax));
+      float gradientMaxY = Math.min(maxY, Math.max(yMin, yMax));
       int gradientMinColor = renderer.getGradientStopColor();
       int gradientMaxColor = renderer.getGradientStartColor();
       int gradientStartColor = gradientMaxColor;
@@ -219,13 +223,19 @@ public class BarChart extends XYChart {
     float halfDiffX = getHalfDiffX(points, points.length, seriesNr);
     for (int i = 0; i < points.length; i += 2) {
       int index = startIndex + i / 2;
-      if (!isNullValue(series.getY(index))) {
+      double value = series.getY(index);
+      if (!isNullValue(value)) {
         float x = points[i];
         if (mType == Type.DEFAULT) {
           x += seriesIndex * 2 * halfDiffX - (seriesNr - 1.5f) * halfDiffX;
         }
-        drawText(canvas, getLabel(series.getY(index)), x,
-            points[i + 1] - renderer.getChartValuesSpacing(), paint, 0);
+        if (value >= 0) {
+          drawText(canvas, getLabel(value), x, points[i + 1] - renderer.getChartValuesSpacing(),
+              paint, 0);
+        } else {
+          drawText(canvas, getLabel(value), x, points[i + 1] + renderer.getChartValuesTextSize()
+              + renderer.getChartValuesSpacing() - 3, paint, 0);
+        }
       }
     }
   }

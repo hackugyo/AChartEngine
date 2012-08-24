@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
    * Returns X-value according to the given index
    * 
    * @param index
-   * @return
+   * @return the X value
    */
   public K getXByIndex(int index) {
     return indexList.get(index);
@@ -74,7 +74,7 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
    * Returns Y-value according to the given index
    * 
    * @param index
-   * @return
+   * @return the Y value
    */
   public V getYByIndex(int index) {
     K key = indexList.get(index);
@@ -85,7 +85,7 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
    * Returns XY-entry according to the given index
    * 
    * @param index
-   * @return
+   * @return the X and Y values
    */
   public XYEntry<K, V> getByIndex(int index) {
     K key = indexList.get(index);

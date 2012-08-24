@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,6 +90,11 @@ public class XYMultipleSeriesRenderer extends DefaultRenderer {
   private int mXLabelsColor = TEXT_COLOR;
   /** The Y axis labels color. */
   private int[] mYLabelsColor = new int[] { TEXT_COLOR };
+  /**
+   * If X axis value selection algorithm to be used. Only used by the time
+   * charts.
+   */
+  private boolean mXRoundedLabels = true;
 
   /**
    * An enum for the XY chart orientation of the X axis.
@@ -557,6 +562,24 @@ public class XYMultipleSeriesRenderer extends DefaultRenderer {
   }
 
   /**
+   * If X axis labels should be rounded.
+   * 
+   * @return if rounded time values to be used
+   */
+  public boolean isXRoundedLabels() {
+    return mXRoundedLabels;
+  }
+
+  /**
+   * Sets if X axis rounded time values to be used.
+   * 
+   * @param rounded rounded values to be used
+   */
+  public void setXRoundedLabels(boolean rounded) {
+    mXRoundedLabels = rounded;
+  }
+
+  /**
    * Adds a new text label for the specified Y axis value.
    * 
    * @param y the Y axis value
@@ -621,7 +644,16 @@ public class XYMultipleSeriesRenderer extends DefaultRenderer {
    * Clears the existing text labels on the Y axis.
    */
   public void clearYTextLabels() {
-    mYTextLabels.clear();
+    clearYTextLabels(0);
+  }
+
+  /**
+   * Clears the existing text labels on the Y axis.
+   * 
+   * @param scale the renderer scale
+   */
+  public void clearYTextLabels(int scale) {
+    mYTextLabels.get(scale).clear();
   }
 
   /**
@@ -975,7 +1007,7 @@ public class XYMultipleSeriesRenderer extends DefaultRenderer {
   public void setInitialRange(double[] range, int scale) {
     initialRange.put(scale, range);
   }
-  
+
   /**
    * Returns the X axis labels color.
    * 
@@ -1005,7 +1037,7 @@ public class XYMultipleSeriesRenderer extends DefaultRenderer {
 
   /**
    * Sets the Y axis labels color.
-   *
+   * 
    * @param scale the renderer scale
    * @param color the Y axis labels color
    */

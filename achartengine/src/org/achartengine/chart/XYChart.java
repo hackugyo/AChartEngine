@@ -348,7 +348,7 @@ public abstract class XYChart extends AbstractChart {
                   canvas.drawLine(right, yLabel, right + getLabelLinePos(axisAlign), yLabel, paint);
                   drawText(canvas, label, right, yLabel - 2, paint, mRenderer.getYLabelsAngle());
                 }
-                
+
                 if (showCustomTextGrid) {
                   paint.setColor(mRenderer.getGridColor());
                   canvas.drawLine(left, yLabel, right, yLabel, paint);
@@ -533,25 +533,28 @@ public abstract class XYChart extends AbstractChart {
       float previousPointX = points[0];
       float previousPointY = points[1];
       for (int k = 0; k < points.length; k += 2) {
-        if (k == 2) { // decide whether to display first two points' values or not
-          if (Math.abs(points[2]- points[0]) > 100 || Math.abs(points[3] - points[1]) > 100) {
+        if (k == 2) { // decide whether to display first two points' values or
+                      // not
+          if (Math.abs(points[2] - points[0]) > renderer.getDisplayChartValuesDistance() || Math.abs(points[3] - points[1]) > renderer.getDisplayChartValuesDistance()) {
             // first point
-            drawText(canvas, getLabel(series.getY(startIndex)), points[0], points[1]
-                - renderer.getChartValuesSpacing(), paint, 0);
+            drawText(canvas, getLabel(series.getY(startIndex)), points[0],
+                points[1] - renderer.getChartValuesSpacing(), paint, 0);
             // second point
-            drawText(canvas, getLabel(series.getY(startIndex + 1)), points[2], points[3]
-                - renderer.getChartValuesSpacing(), paint, 0);
+            drawText(canvas, getLabel(series.getY(startIndex + 1)), points[2],
+                points[3] - renderer.getChartValuesSpacing(), paint, 0);
 
             previousPointX = points[2];
             previousPointY = points[3];
           }
         } else if (k > 2) {
-          // compare current point's position with the previous point's, if they are not too close, display
-          if (Math.abs(points[k]- previousPointX) > 100 || Math.abs(points[k+1] - previousPointY) > 100) {
+          // compare current point's position with the previous point's, if they
+          // are not too close, display
+          if (Math.abs(points[k] - previousPointX) > renderer.getDisplayChartValuesDistance()
+              || Math.abs(points[k + 1] - previousPointY) > renderer.getDisplayChartValuesDistance()) {
             drawText(canvas, getLabel(series.getY(startIndex + k / 2)), points[k], points[k + 1]
                 - renderer.getChartValuesSpacing(), paint, 0);
             previousPointX = points[k];
-            previousPointY = points[k+1];
+            previousPointY = points[k + 1];
           }
         }
       }
@@ -609,22 +612,6 @@ public abstract class XYChart extends AbstractChart {
   }
 
   /**
-   * Makes sure the fraction digit is not displayed, if not needed.
-   * 
-   * @param label the input label value
-   * @return the label without the useless fraction digit
-   */
-  protected String getLabel(double label) {
-    String text = "";
-    if (label == Math.round(label)) {
-      text = Math.round(label) + "";
-    } else {
-      text = label + "";
-    }
-    return text;
-  }
-
-  /**
    * The graphical representation of the labels on the X axis.
    * 
    * @param xLabels the X labels values
@@ -664,16 +651,15 @@ public abstract class XYChart extends AbstractChart {
   /**
    * The graphical representation of the labels on the X axis.
    * 
-   * @param xLabels the X labels values
-   * @param xTextLabelLocations the X text label locations
+   * @param allYLabels the Y labels values
    * @param canvas the canvas to paint to
    * @param paint the paint to be used for drawing
+   * @param maxScaleNumber the maximum scale number
    * @param left the left value of the labels area
-   * @param top the top value of the labels area
+   * @param right the right value of the labels area
    * @param bottom the bottom value of the labels area
-   * @param xPixelsPerUnit the amount of pixels per one unit in the chart labels
-   * @param minX the minimum value on the X axis in the chart
-   * @param maxX the maximum value on the X axis in the chart
+   * @param yPixelsPerUnit the amount of pixels per one unit in the chart labels
+   * @param minY the minimum value on the Y axis in the chart
    */
   protected void drawYLabels(Map<Integer, List<Double>> allYLabels, Canvas canvas, Paint paint,
       int maxScaleNumber, int left, int right, int bottom, double[] yPixelsPerUnit, double[] minY) {
@@ -746,7 +732,7 @@ public abstract class XYChart extends AbstractChart {
           float xLabel = (float) (left + xPixelsPerUnit * (location.doubleValue() - minX));
           paint.setColor(mRenderer.getXLabelsColor());
           canvas
-          .drawLine(xLabel, bottom, xLabel, bottom + mRenderer.getLabelsTextSize() / 3, paint);
+              .drawLine(xLabel, bottom, xLabel, bottom + mRenderer.getLabelsTextSize() / 3, paint);
           drawText(canvas, mRenderer.getXTextLabel(location), xLabel,
               bottom + mRenderer.getLabelsTextSize() * 4 / 3, paint, mRenderer.getXLabelsAngle());
           if (showCustomTextGrid) {

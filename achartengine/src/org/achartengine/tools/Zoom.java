@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,6 @@ public class Zoom extends AbstractTool {
   public static final int ZOOM_AXIS_X = 1;
   /** Zoom on Y axis independently */
   public static final int ZOOM_AXIS_Y = 2;
-
 
   /**
    * Builds the zoom tool.
@@ -95,42 +94,37 @@ public class Zoom extends AbstractTool {
         }
 
         if (mZoomIn) {
-          if (mRenderer.isZoomXEnabled() &&	 // zoom in on X axis
-              (zoom_axis == ZOOM_AXIS_X || zoom_axis == ZOOM_AXIS_XY)) {
-            if (limitsReachedX && mZoomRate < 1) {	
+          if (mRenderer.isZoomXEnabled() && (zoom_axis == ZOOM_AXIS_X || zoom_axis == ZOOM_AXIS_XY)) {
+            if (limitsReachedX && mZoomRate < 1) {
               // ignore pinch zoom out once reached X limit
             } else {
               newWidth /= mZoomRate;
             }
           }
 
-          if (mRenderer.isZoomYEnabled() && // zoom in on Y axis
-              (zoom_axis == ZOOM_AXIS_Y || zoom_axis == ZOOM_AXIS_XY)) {
+          if (mRenderer.isZoomYEnabled() && (zoom_axis == ZOOM_AXIS_Y || zoom_axis == ZOOM_AXIS_XY)) {
             if (limitsReachedY && mZoomRate < 1) {
             } else {
               newHeight /= mZoomRate;
             }
           }
         } else {
-          if (mRenderer.isZoomXEnabled() &&	 !limitsReachedX &&	    // zoom out on X axis
-              (zoom_axis == ZOOM_AXIS_X || zoom_axis == ZOOM_AXIS_XY)) {
+          if (mRenderer.isZoomXEnabled() && !limitsReachedX
+              && (zoom_axis == ZOOM_AXIS_X || zoom_axis == ZOOM_AXIS_XY)) {
             newWidth *= mZoomRate;
           }
 
-          if (mRenderer.isZoomYEnabled() &&	 !limitsReachedY &&     // zoom out on Y axis
-              (zoom_axis == ZOOM_AXIS_Y || zoom_axis == ZOOM_AXIS_XY)) {
+          if (mRenderer.isZoomYEnabled() && !limitsReachedY
+              && (zoom_axis == ZOOM_AXIS_Y || zoom_axis == ZOOM_AXIS_XY)) {
             newHeight *= mZoomRate;
           }
         }
-
-        if (mRenderer.isZoomXEnabled() && 
-            (zoom_axis == ZOOM_AXIS_X || zoom_axis == ZOOM_AXIS_XY)) {
+        if (mRenderer.isZoomXEnabled() && (zoom_axis == ZOOM_AXIS_X || zoom_axis == ZOOM_AXIS_XY)) {
           newXMin = centerX - newWidth / 2;
           newXMax = centerX + newWidth / 2;
           setXRange(newXMin, newXMax, i);
         }
-        if (mRenderer.isZoomYEnabled() &&
-            (zoom_axis == ZOOM_AXIS_Y || zoom_axis == ZOOM_AXIS_XY)) {
+        if (mRenderer.isZoomYEnabled() && (zoom_axis == ZOOM_AXIS_Y || zoom_axis == ZOOM_AXIS_XY)) {
           newYMin = centerY - newHeight / 2;
           newYMax = centerY + newHeight / 2;
           setYRange(newYMin, newYMax, i);
@@ -146,7 +140,6 @@ public class Zoom extends AbstractTool {
     }
     notifyZoomListeners(new ZoomEvent(mZoomIn, mZoomRate));
   }
-
 
   /**
    * Notify the zoom listeners about a zoom change.

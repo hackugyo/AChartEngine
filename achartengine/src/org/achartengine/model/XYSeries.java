@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
+ * Copyright (C) 2009 - 2012 SC 4ViewSoft SRL
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
 package org.achartengine.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.achartengine.util.IndexXYMap;
 import org.achartengine.util.MathHelper;
@@ -150,13 +149,6 @@ public class XYSeries implements Serializable {
     initRange();
   }
 
-  public synchronized void setXY(List<PointD> points) {
-    clear();
-    for (PointD point : points) {
-      mXY.put(point.x, point.y);
-    }
-  }
-
   /**
    * Returns the X axis value at the specified index.
    * 
@@ -182,7 +174,7 @@ public class XYSeries implements Serializable {
    * 
    * @param start start x value
    * @param stop stop x value
-   * @return
+   * @return a submap of x and y values
    */
   public synchronized SortedMap<Double, Double> getRange(double start, double stop,
       int beforeAfterPoints) {
@@ -210,7 +202,7 @@ public class XYSeries implements Serializable {
         stop += next;
       }
     }
-    return mXY.subMap(start, stop);
+    return new TreeMap<Double, Double>(mXY.subMap(start, stop));
   }
 
   public int getIndexForKey(double key) {
