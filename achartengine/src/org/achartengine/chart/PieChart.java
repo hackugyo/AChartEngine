@@ -33,7 +33,7 @@ import android.graphics.RectF;
  */
 public class PieChart extends RoundChart {
   /** Handles returning values when tapping on PieChart. */
-  private PieMapper mPieMapper;
+  protected PieMapper mPieMapper;
 
   /**
    * Builds a new pie chart instance.
@@ -108,7 +108,23 @@ public class PieChart extends RoundChart {
       paint.setColor(mRenderer.getSeriesRendererAt(i).getColor());
       float value = (float) mDataset.getValue(i);
       float angle = (float) (value / total * 360);
-      canvas.drawArc(oval, currentAngle, angle, true, paint);
+      SimpleSeriesRenderer renderer = mRenderer.getSeriesRendererAt(i);
+      
+      // setting gradient
+      if (renderer.isGradientEnabled()) {
+        Paint paintForGradient = new Paint();
+        paintForGradient.setStrokeWidth(1);
+        paintForGradient.setStrokeCap(Paint.Cap.SQUARE);
+        paintForGradient.setStyle(Paint.Style.FILL);
+        int[] colors = { renderer.getGradientStartColor(), renderer.getGradientEndColor() };
+        // @see http://stackoverflow.com/questions/9037108/android-how-to-draw-an-arc-based-gradient
+        float[] positions = { currentAngle / 360f, (currentAngle + angle) / 360f };
+        SweepGradient gradient =  new SweepGradient(mCenterX, mCenterY, colors, positions);
+        pointForGradient.setShader(gradient);
+        canvas.drawArc(oval, currentAngle, angle, true, paintForGradient);
+      } else {
+        canvas.drawArc(oval, currentAngle, angle, true, paint);
+      }
       drawLabel(canvas, mDataset.getCategory(i), mRenderer, prevLabelsBounds, mCenterX, mCenterY,
           shortRadius, longRadius, currentAngle, angle, left, right, mRenderer.getLabelsColor(),
           paint, true);
